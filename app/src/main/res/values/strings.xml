@@ -31,5 +31,7 @@
     </string-array>
     <string name="appmetrica_key" translatable="false">a6217d8d-b1bb-47c8-b095-b81ebdde3a39</string>
     <string name="new_directory_title">Input new directory title</string>
+    <string name="action_show_create_directory">Show create directory button</string>
+    <string name="isChooseDirectoryShow" translatable="false">ChooseDirectoryShow</string>
 
 </resources>

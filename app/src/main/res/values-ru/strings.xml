@@ -31,4 +31,5 @@
     <string name="ok">Готово</string>
     <string name="root">Главная</string>
     <string name="new_directory_title">Введите название новой папки</string>
+    <string name="action_show_create_directory">Показывать кнопку выбрать папку</string>
 </resources>

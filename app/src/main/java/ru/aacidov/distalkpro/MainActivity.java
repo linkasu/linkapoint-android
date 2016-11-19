@@ -2,15 +2,19 @@ package ru.aacidov.distalkpro;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.ActionMenuItemView;
+import android.support.v7.view.menu.MenuItemImpl;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -31,8 +35,10 @@ import ru.aacidov.distalkpro.utils.YandexMetriсaHelper;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static Context context;
     private FileStorage mfs;
     private GridViewController gvc;
+    private MenuItemImpl mni;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         YandexMetriсaHelper.activate(getApplication(), getString(R.string.appmetrica_key));
@@ -60,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE;
         decorView.setSystemUiVisibility(uiOptions);
+        context = this;
     }
 
     private static final int PICK_PHOTO_FOR_AVATAR = 0;
@@ -116,9 +124,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                boolean checked = Cookie.getInstance().getChooseDirectoryShow();
+
+                mni = (MenuItemImpl) menu.findItem(R.id.action_show_create_directory);
+                mni.setChecked(checked);
+
+                mni = (MenuItemImpl) menu.findItem(R.id.action_choose_directory);
+                mni.setShowAsAction(checked?MenuItem.SHOW_AS_ACTION_ALWAYS:MenuItem.SHOW_AS_ACTION_NEVER);
+            }
+        });
+
+
         return true;
     }
 
@@ -180,6 +204,17 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id==R.id.action_show_create_directory){
+            boolean checked = !item.isChecked();
+            item.setChecked(checked);
+            int showStatus = checked?MenuItem.SHOW_AS_ACTION_ALWAYS:MenuItem.SHOW_AS_ACTION_NEVER;
+            mni.setShowAsAction(showStatus);
+            Cookie.getInstance().setChooseDirectoryShow(checked);
+            YandexMetriсaHelper.showCreateDirectoryButton(checked);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
+
 }

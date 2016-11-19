@@ -41,4 +41,8 @@ public class YandexMetriсaHelper {
     public static void chooseDirectoryEvent(String text) {
         YandexMetrica.reportEvent("choose category", "{\"text\":\""+text+"\"}");
     }
+
+    public static void showCreateDirectoryButton(boolean checked) {
+        YandexMetrica.reportEvent("show choose directory button", "{\"on\":"+checked+"}");
+    }
 }

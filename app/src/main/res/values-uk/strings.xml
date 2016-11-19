@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DisTalk Pro</string>
+    <string name="action_settings">Налаштування</string>
+    <string-array name="pictitles">
+        <item>Обведи</item>
+        <item>З\'єднай</item>
+        <item>Намалюй</item>
+        <item>Прибери</item>
+        <item>Розфарбуй</item>
+        <item>Якого кольору</item>
+        <item>Приклей</item>
+        <item>Розклади</item>
+        <item>Покажи</item>
+        <item>Поклади</item>
+        <item>Що це</item>
+        <item>Скопіюй</item>
+    </string-array>
+
+    <string-array name="picture_menu" >
+        <item>Перейменувати</item>
+        <item>Видалити</item>
+    </string-array>
+    <string name="action_add_picture">Додати зображення</string>
+    <string name="action_choose_directory">Вибрати папку</string>
+    <string name="action_create_directory">Створити папку</string>
+    <string name="action_picture_menu">Меню зображення</string>
+    <string name="cancel">Відміна</string>
+    <string name="image_title">Введіть назву зображення</string>
+    <string name="new_image_title">Введіть нову назву зображення</string>
+    <string name="ok">Готово</string>
+    <string name="root">Головна</string>
+    <string name="new_directory_title">Введіть назву нової папки</string>
+    <string name="action_show_create_directory">Показувати кнопку вибрати папку</string>
+</resources>
