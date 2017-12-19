@@ -34,8 +34,9 @@ public class GridViewController implements AdapterView.OnItemLongClickListener, 
 
     public GridViewController() {
         mfs = FileStorage.getInstance();
-        tts = TTS.getInstance();
+
         cxt = MainActivity.context;
+        tts = TTS.getInstance();
         gv=(GridView) ((Activity)cxt).findViewById(R.id.gridView);
         load();
         gv.setOnItemClickListener(this);
