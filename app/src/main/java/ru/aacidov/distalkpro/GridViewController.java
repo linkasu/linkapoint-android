@@ -1,16 +1,22 @@
 package ru.aacidov.distalkpro;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.yandex.metrica.YandexMetrica;
 
@@ -30,6 +36,7 @@ public class GridViewController implements AdapterView.OnItemLongClickListener, 
     private GridView gv;
     private Context cxt;
     private String[] pictureMenuItems;
+    private ImageItem[] items;
     private static GridViewController instance;
 
     public GridViewController() {
@@ -56,14 +63,34 @@ public class GridViewController implements AdapterView.OnItemLongClickListener, 
     }
 
     public void load() {
-        ImageItem[] items = mfs.getImages();
+        items = mfs.getImages();
         gv.setAdapter(new ImageAdapter(cxt, R.layout.grid_view_item, items));
+    }
+
+    public void showImage(ImageItem image) {
+        Dialog builder = new Dialog(cxt);
+        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        builder.getWindow().setBackgroundDrawable(
+                new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                //nothing;
+            }
+        });
+
+        ImageView imageView = new ImageView(cxt);
+        imageView.setImageBitmap(image.getImage());
+        builder.addContentView(imageView, new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        builder.show();
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        showImage(items[i]);
         String text     = mfs.getText(i);
-
         tts.speak(text);
         YandexMetriсaHelper.saidEvent(text);
     }
