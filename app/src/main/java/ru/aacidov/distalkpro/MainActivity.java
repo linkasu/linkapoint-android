@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         YandexMetriсaHelper.activate(getApplication(), getString(R.string.appmetrica_key));
 
+        mfs = FileStorage.getInstance();
 
         fb = new FeedBack(this);
         Resources res = getResources();
