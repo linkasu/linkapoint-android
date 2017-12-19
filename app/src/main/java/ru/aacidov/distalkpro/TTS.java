@@ -16,7 +16,9 @@ public class TTS {
         tts = new TextToSpeech(MainActivity.context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
-                tts.setLanguage(Locale.getDefault());
+                if(i == TextToSpeech.SUCCESS) {
+                    tts.setLanguage(Locale.getDefault());
+                }
             }
         });
 
