@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,12 +20,15 @@ public class ImageAdapter extends ArrayAdapter {
     private Context context;
     private int layoutResourceId;
     private ImageItem[] data;
+    private SizeController sizeController;
 
     public ImageAdapter(Context context, int layoutResourceId, ImageItem[] data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
+
+        sizeController = SizeController.getInstance();
     }
 
     @Override
@@ -37,7 +41,11 @@ public class ImageAdapter extends ArrayAdapter {
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
             holder.imageTitle = (TextView) row.findViewById(R.id.text);
-            holder.image = (ImageView) row.findViewById(R.id.image);
+            ImageView image = holder.image = (ImageView) row.findViewById(R.id.image);
+            ViewGroup.LayoutParams lp = image.getLayoutParams();
+            lp.width = sizeController.size;
+            lp.height = sizeController.size;
+            image.setLayoutParams(lp);
             row.setTag(holder);
         } else {
             holder = (ViewHolder) row.getTag();

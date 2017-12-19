@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "346373067415",
+    "firebase_url": "https://distalkpro.firebaseio.com",
+    "project_id": "distalkpro",
+    "storage_bucket": "distalkpro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346373067415:android:7e7ddd103a915b3e",
+        "android_client_info": {
+          "package_name": "ru.aacidov.distalkpro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346373067415-kbt5qm69phvfaopijiuqbmvqhqcjeikn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.aacidov.distalkpro",
+            "certificate_hash": "46C6B789F46199DF6B7706029EE7D0C72C1674FF"
+          }
+        },
+        {
+          "client_id": "346373067415-3rb68g7o62vrcp8kne0tjduihdo32m2v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoldTxjRIig6-xLZxewm73bxmCgBxbfGw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346373067415-3rb68g7o62vrcp8kne0tjduihdo32m2v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

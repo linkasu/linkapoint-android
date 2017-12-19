@@ -29,18 +29,26 @@ public class FileStorage {
     private String[] titles;
     private String[] currentTexts;
     private String[] files;
+    private static FileStorage instance;
 
-    public FileStorage(Context cxt, Activity activity, String[] tls){
-        context = cxt;
-        titles=tls;
+    public FileStorage(){
+        context = MainActivity.context;
+        titles= context.getResources().getStringArray(R.array.pictitles);
 
-        verifyStoragePermissions(activity);
+        verifyStoragePermissions((Activity) context);
 
         root = new File(Environment.getExternalStorageDirectory(), "DisTalk/");
         currentDirectory=root;
         if (!root.exists()) {
             createDefaultDirectory();
         }
+    }
+
+    public static FileStorage getInstance() {
+        if (instance==null){
+            instance=new FileStorage();
+        }
+        return instance;
     }
 
     private void createDefaultDirectory() {

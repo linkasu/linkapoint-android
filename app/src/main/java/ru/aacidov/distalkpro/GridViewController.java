@@ -1,5 +1,6 @@
 package ru.aacidov.distalkpro;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -29,16 +30,29 @@ public class GridViewController implements AdapterView.OnItemLongClickListener, 
     private GridView gv;
     private Context cxt;
     private String[] pictureMenuItems;
+    private static GridViewController instance;
 
-    public GridViewController(Context context, GridView gridView, FileStorage amfs, TTS atts) {
-        mfs = amfs;
-        tts = atts;
-        cxt = context;
-        gv=gridView;
+    public GridViewController() {
+        mfs = FileStorage.getInstance();
+        tts = TTS.getInstance();
+        cxt = MainActivity.context;
+        gv=(GridView) ((Activity)cxt).findViewById(R.id.gridView);
         load();
         gv.setOnItemClickListener(this);
         gv.setOnItemLongClickListener(this);
         pictureMenuItems = cxt.getResources().getStringArray(R.array.picture_menu);
+    }
+
+    public static GridViewController getInstance() {
+        if(instance==null){
+            instance=new GridViewController();
+        }
+        return instance;
+    }
+
+    public int setColumnWidth(int width){
+        gv.setColumnWidth(width);
+        return width;
     }
 
     public void load() {

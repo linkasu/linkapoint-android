@@ -33,5 +33,11 @@
     <string name="new_directory_title">Input new directory title</string>
     <string name="action_show_create_directory">Show create directory button</string>
     <string name="isChooseDirectoryShow" translatable="false">ChooseDirectoryShow</string>
+    <string name="action_feedback">Feedback</string>
+    <string name="input_email">Input your email for answer</string>
+    <string name="input_feedback">Input feedback</string>
+    <string name="thanks_feedback">Thanks feedback</string>
+    <string name="dont_input">Sorry, you dont input email or text</string>
+    <string name="action_set_size">Set buttons size</string>
 
 </resources>

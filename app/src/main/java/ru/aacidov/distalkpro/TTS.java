@@ -10,15 +10,24 @@ import java.util.Locale;
  */
 public class TTS {
     private TextToSpeech tts;
+    private static TTS instance;
 
-    public TTS(Context cxt) {
-        tts = new TextToSpeech(cxt, new TextToSpeech.OnInitListener() {
+    public TTS() {
+        tts = new TextToSpeech(MainActivity.context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
                 tts.setLanguage(Locale.getDefault());
             }
         });
 
+    }
+
+    public static TTS getInstance() {
+        if(instance==null){
+            instance = new TTS();
+        }
+
+        return instance;
     }
 
     public void speak (String text){

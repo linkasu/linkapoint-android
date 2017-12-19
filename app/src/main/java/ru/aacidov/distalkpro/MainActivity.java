@@ -1,7 +1,6 @@
 package ru.aacidov.distalkpro;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,29 +8,25 @@ import android.content.res.Resources;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.view.menu.MenuItemImpl;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
-
-import com.yandex.metrica.YandexMetrica;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
 import ru.aacidov.distalkpro.utils.YandexMetriсaHelper;
+import ru.aacidov.disfeedback.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private FileStorage mfs;
     private GridViewController gvc;
     private MenuItemImpl mni;
+    private FeedBack fb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,28 +42,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        context = this;
 
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         YandexMetriсaHelper.activate(getApplication(), getString(R.string.appmetrica_key));
 
 
-        TTS tts = new TTS(this);
+        fb = new FeedBack(this);
         Resources res = getResources();
 
-
-        mfs = new FileStorage(this, this, res.getStringArray(R.array.pictitles));
-
-        GridView gv = (GridView) findViewById(R.id.gridView);
-
-        gvc = new GridViewController(this, gv, mfs, tts);
+        gvc = GridViewController.getInstance();
 
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE;
         decorView.setSystemUiVisibility(uiOptions);
-        context = this;
+
+        SizeController.getInstance().update();
     }
 
     private static final int PICK_PHOTO_FOR_AVATAR = 0;
@@ -158,6 +151,27 @@ public class MainActivity extends AppCompatActivity {
             pickImage();
             return true;
         }
+        if (id == R.id.action_set_size) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.action_set_size);
+            final SeekBar input = new SeekBar(this);
+
+            input.setMax(400);
+            input.setProgress(SizeController.getInstance().size);
+            builder.setView(input);
+
+
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int i ){
+                    int size = input.getProgress()+100;
+                    SizeController.getInstance().setSize(size);
+                    gvc.load();
+                }
+            });
+            builder.show();
+
+            return true;
+        }
         if (id==R.id.action_create_directory){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -211,6 +225,12 @@ public class MainActivity extends AppCompatActivity {
             mni.setShowAsAction(showStatus);
             Cookie.getInstance().setChooseDirectoryShow(checked);
             YandexMetriсaHelper.showCreateDirectoryButton(checked);
+            return true;
+        }
+
+        if (id==R.id.action_feedback){
+
+            fb.openFeedbackForm();
             return true;
         }
 

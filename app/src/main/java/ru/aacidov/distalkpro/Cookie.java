@@ -13,6 +13,7 @@ public class Cookie {
     private final String icds;
     static Cookie instance = null;
     private SharedPreferences.Editor editor;
+    private String is;
 
     static Cookie getInstance(){
         if (instance==null){
@@ -26,6 +27,7 @@ public class Cookie {
         sharedPref = context.getSharedPreferences(STORAGENAME, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
         icds = context.getString(R.string.isChooseDirectoryShow);
+        is = "imageSize";
     }
 
     public void setChooseDirectoryShow (boolean show){
@@ -37,5 +39,16 @@ public class Cookie {
 
     public boolean getChooseDirectoryShow(){
         return sharedPref.getBoolean(icds, true);
+    }
+
+    public void setImageSize (int size){
+
+        editor.putInt(is, size);
+        editor.commit();
+
+    }
+
+    public int getImageSize() {
+        return sharedPref.getInt(is, 100);
     }
 }

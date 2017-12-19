@@ -32,4 +32,10 @@
     <string name="root">Главная</string>
     <string name="new_directory_title">Введите название новой папки</string>
     <string name="action_show_create_directory">Показывать кнопку выбрать папку</string>
+    <string name="action_feedback">Обратная связь (жалобы и предложения)</string>
+    <string name="dont_input">Вы не ввели текст или email</string>
+    <string name="input_email">Введите email для ответа от разработчиков</string>
+    <string name="input_feedback">Введите отзыв, жалобу или предложение</string>
+    <string name="thanks_feedback">Спасибо за отзыв</string>
+    <string name="action_set_size">Изменить размер картинок</string>
 </resources>
