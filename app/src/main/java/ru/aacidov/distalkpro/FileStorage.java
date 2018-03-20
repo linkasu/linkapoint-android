@@ -35,7 +35,6 @@ public class FileStorage {
         context = MainActivity.context;
         titles= context.getResources().getStringArray(R.array.pictitles);
 
-        verifyStoragePermissions((Activity) context);
 
         root = new File(Environment.getExternalStorageDirectory(), "DisTalk/");
         currentDirectory=root;
@@ -94,15 +93,6 @@ public class FileStorage {
         return filenameArray[filenameArray.length-1];
     }
 
-    private void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
-        }
-    }
 
     public ImageItem[] getImages() {
         files = currentDirectory.list(new FilenameFilter() {
@@ -111,6 +101,7 @@ public class FileStorage {
                 return s.contains(".");
             }
         });
+        if (files==null) return new ImageItem[]{};
         currentTexts = new String[files.length];
         ImageItem[] images = new ImageItem[files.length];
         for (int i =0 ; i<files.length; i++) {

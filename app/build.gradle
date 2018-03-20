@@ -7,9 +7,9 @@ android {
     defaultConfig {
         applicationId "ru.aacidov.distalkpro"
         minSdkVersion 13
-        targetSdkVersion 26
-        versionCode 7
-        versionName "1.7"
+        targetSdkVersion 23
+        versionCode 9
+        versionName "1.8.1"
     }
     buildTypes {
         release {

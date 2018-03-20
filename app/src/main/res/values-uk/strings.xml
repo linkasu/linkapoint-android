@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DisTalk Pro</string>
+    <string name="app_name">LINKa: покажи</string>
     <string name="action_settings">Налаштування</string>
     <string-array name="pictitles">
         <item>Обведи</item>
@@ -38,4 +38,5 @@
     <string name="input_email">Введіть email для відповіді від розробників</string>
     <string name="thanks_feedback">Дякую за відгук</string>
     <string name="action_set_size">Змінити розмір картинок</string>
+    <string name="no_permissions">Вы не дали права доступа к файловой системе</string>
 </resources>
