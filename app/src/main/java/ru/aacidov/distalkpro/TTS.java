@@ -2,6 +2,7 @@ package ru.aacidov.distalkpro;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -16,10 +17,16 @@ public class TTS {
         tts = new TextToSpeech(MainActivity.context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
-                tts.setLanguage(Locale.getDefault());
+                if(i == TextToSpeech.SUCCESS) {
+                    tts.setLanguage(Locale.getDefault());
+                }
+                else if (i == TextToSpeech.LANG_MISSING_DATA ||
+                        i == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Toast.makeText(MainActivity.context, "Error initializing text to speech!", Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
         });
-
     }
 
     public static TTS getInstance() {
