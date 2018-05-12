@@ -4,12 +4,15 @@ import android.app.Application;
 
 import com.yandex.metrica.YandexMetrica;
 
+import ru.aacidov.distalkpro.DisTalkPro;
+
 
 /**
  * Created by aacidov on 29.10.16.
  */
 public class YandexMetriсaHelper {
-    public static void activate(Application application, String key){
+    public static void activate( String key){
+        Application application = (Application) DisTalkPro.getAppContext();
         YandexMetrica.activate(application,key);
 
         YandexMetrica.enableActivityAutoTracking(application);
@@ -22,6 +25,12 @@ public class YandexMetriсaHelper {
         YandexMetrica.reportEvent("open picture menu");
     }
 
+    public static void  openTTSSettings(){
+        YandexMetrica.reportEvent("Open TTS Settings");
+    }
+    public static void  openTTSInstall(){
+        YandexMetrica.reportEvent("Open TTS install");
+    }
     public static void renameEvent(String text) {
         YandexMetrica.reportEvent("rename", "{\"text\":\""+text+"\"}");
     }
@@ -50,4 +59,14 @@ public class YandexMetriсaHelper {
         YandexMetrica.reportEvent("feedback", "{\"text\":\""+email+":"+text+"\"}");
 
     }
+    public static void storeOpenEvent() {
+        YandexMetrica.reportEvent("open store");
+    }
+    public static void storeOpenSetEvent() {
+        YandexMetrica.reportEvent("open set");
+    }
+    public static void storeDownloadEvent() {
+        YandexMetrica.reportEvent("download set");
+    }
+
 }

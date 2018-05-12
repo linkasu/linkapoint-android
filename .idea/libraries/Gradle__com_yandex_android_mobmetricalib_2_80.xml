@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.yandex.android:mobmetricalib-2.80">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/mobmetricalib-2.80.aar/e670d88996c77495636ed6bf13812f84/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/mobmetricalib-2.80.aar/e670d88996c77495636ed6bf13812f84/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.yandex.android/mobmetricalib/2.80/12ce0493572d6b5d97ee3c9d7f6d98b82ab6c41a/mobmetricalib-2.80-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

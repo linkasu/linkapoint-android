@@ -40,5 +40,22 @@
     <string name="dont_input">Sorry, you dont input email or text</string>
     <string name="action_set_size">Set buttons size</string>
     <string name="no_permissions">you didn\'t give me permissions for work</string>
+    <string name="store">Store</string>
+    <string name="sets">Sets</string>
+    <string name="content">Content</string>
+    <string name="download">Download</string>
+    <string name="downloading">Downloading</string>
+    <string name="downloaded">Downloaded</string>
+    <string name="version_doesnt_support">your version  android doesn\'t support</string>
+    <string name="set">Set</string>
+    <string name="action_set_menu">Set menu</string>
+    <string name="new_set_title">Enter new set title</string>
+    <string name="cant_edit_set">You can\'t edit this set</string>
+    <string name="connection_error">Connection error</string>
+    <string name="try_again">Try again</string>
+    <string name="promo_store_message">Hi, we developed pictures library, let\'s see our store</string>
+    <string name="tts_settings">Open tts settings</string>
+    <string name="install_tts">Please, install the speech synth from the Play Store.</string>
+    <string name="lang_doesnt_support">I can\'t speak</string>
 
 </resources>

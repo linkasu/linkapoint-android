@@ -57,6 +57,12 @@ public class ImageAdapter extends ArrayAdapter {
         return row;
     }
 
+    public ImageItem getItemAtPosition (int position) {
+        return data[position];
+    }
+
+
+
     static class ViewHolder {
         TextView imageTitle;
         ImageView image;

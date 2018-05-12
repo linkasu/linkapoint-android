@@ -39,4 +39,22 @@
     <string name="thanks_feedback">Спасибо за отзыв</string>
     <string name="action_set_size">Изменить размер картинок</string>
     <string name="no_permissions">Вы не дали права доступа к файловой системе</string>
+    <string name="store">Магазин</string>
+    <string name="action_set_menu">Меню набора</string>
+    <string name="cant_edit_set">Вы не можете редактировать этот набор</string>
+    <string name="connection_error">Ошибка подключения</string>
+    <string name="content">Содержимое</string>
+    <string name="download">Загрузить</string>
+    <string name="downloaded">Загружено</string>
+    <string name="downloading">Идет загрузка</string>
+    <string name="new_set_title">Введите новое название набора</string>
+    <string name="set">Набор</string>
+    <string name="sets">Наборы</string>
+    <string name="try_again">Попробовать снова</string>
+    <string name="version_doesnt_support">Версия Android не поддерживает</string>
+    <string name="promo_store_message">Привет, мы разработали библиотеку изображений, посмотрим наш магазин</string>
+
+    <string name="tts_settings">Открыть настройки синтезатора речи</string>
+    <string name="install_tts">Пожалуйста, установите синтезатор речи из Play Маркета.</string>
+    <string name="lang_doesnt_support">Не могу говорить</string>
 </resources>

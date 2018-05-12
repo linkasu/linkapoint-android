@@ -12,22 +12,25 @@ public class Cookie {
     private final SharedPreferences sharedPref;
     private final String icds;
     static Cookie instance = null;
+    private final String storeOpened;
     private SharedPreferences.Editor editor;
     private String is;
+    private Context context;
 
     static Cookie getInstance(){
-        if (instance==null){
+        if(instance==null?true:instance.context!=MainActivity.context){
             instance = new Cookie();
         }
         return instance;
     }
 
     public Cookie(){
-        Context context = MainActivity.context;
+        context = MainActivity.context;
         sharedPref = context.getSharedPreferences(STORAGENAME, Context.MODE_PRIVATE);
         editor = sharedPref.edit();
         icds = context.getString(R.string.isChooseDirectoryShow);
         is = "imageSize";
+        storeOpened = "storeOpened";
     }
 
     public void setChooseDirectoryShow (boolean show){
@@ -49,6 +52,14 @@ public class Cookie {
     }
 
     public int getImageSize() {
-        return sharedPref.getInt(is, 100);
+        return sharedPref.getInt(is, 300);
+    }
+
+    public void setStoreOpened(boolean value){
+        editor.putBoolean(storeOpened, value);
+        editor.commit();
+    }
+    public boolean getStoreOpened () {
+        return sharedPref.getBoolean(storeOpened, false);
     }
 }

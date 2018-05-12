@@ -11,6 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ru.aacidov.distalkpro.MainActivity"
     tools:showIn="@layout/activity_main">
+
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gridView"
         android:layout_width="match_parent"

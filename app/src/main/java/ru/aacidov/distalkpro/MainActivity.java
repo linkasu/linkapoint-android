@@ -24,19 +24,23 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.common.io.ByteStreams;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 
+import ru.aacidov.distalkpro.store.SetsListActivity;
 import ru.aacidov.distalkpro.utils.YandexMetriсaHelper;
 import ru.aacidov.disfeedback.*;
 
 public class MainActivity extends AppCompatActivity {
 
     public static Context context;
-    private FileStorage mfs;
     private GridViewController gvc;
     private MenuItemImpl mni;
     private FeedBack fb;
@@ -46,61 +50,50 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         context = this;
 
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        YandexMetriсaHelper.activate(getApplication(), getString(R.string.appmetrica_key));
-        verifyStoragePermissions((Activity) context);
 
+
+        fb = new FeedBack(this);
+
+        gvc = GridViewController.getInstance();
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE;
+        decorView.setSystemUiVisibility(uiOptions);
+        SizeController.getInstance().update();
+
+        newStoreMessage();
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 0: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
 
+    private void newStoreMessage() {
+        if(Cookie.getInstance().getStoreOpened()) return;
+        Cookie.getInstance().setStoreOpened(true);
 
-                    fb = new FeedBack(this);
-                    Resources res = getResources();
-
-                    gvc = GridViewController.getInstance();
-                    mfs = FileStorage.getInstance();
-
-                    View decorView = getWindow().getDecorView();
-                    int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE;
-                    decorView.setSystemUiVisibility(uiOptions);
-                    SizeController.getInstance().update();
-                } else {
-                    Toast.makeText(this, R.string.no_permissions, Toast.LENGTH_LONG);
-                }
-                return;
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage(R.string.promo_store_message);
+        dlgAlert.setTitle(R.string.store);
+        dlgAlert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                openStore();
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }
+        });
+        dlgAlert.setNegativeButton(R.string.cancel, null);
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
     }
 
-    private void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(activity, new String[] { android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
-
-        }
+    private void openStore() {
+        Intent intent = new Intent(this, SetsListActivity.class);
+        startActivity(intent);
     }
-
-
 
 
     private static final int PICK_PHOTO_FOR_AVATAR = 0;
@@ -134,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         String title = input.getText().toString();
                         try {
-                            mfs.copyFile(inputStream, title);
+                            DB.getInstance().createPicture(title, ByteStreams.toByteArray(inputStream), gvc.category);
                             gvc.load();
                             YandexMetriсaHelper.addPictureEvent(title);
                         } catch (IOException e) {
@@ -180,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -224,8 +217,8 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int i ){
                     String title = input.getText().toString();
-                    mfs.createDirectory(title);
-                    mfs.setCurrentDirectory(title);
+                    DB.getInstance().createCategory(title);
+                    //mfs.setCurrentDirectory(title);
                     gvc.load();
                     YandexMetriсaHelper.createDirectoryEvent(title);
                 }
@@ -234,27 +227,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if(id== R.id.action_choose_directory){
-            final String[] directories = mfs.getDirectories();
-            final String[] items = new String[directories.length+1];
-            items[0]= getString(R.string.root);
-            for (int i = 1; i < items.length; i++) {
-                items[i] = directories[i-1];
-            }
 
-            ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, items);
-            AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-            builderSingle.setTitle(R.string.action_choose_directory);
-            builderSingle.setAdapter(mArrayAdapter, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    String dir = i==0?"/":directories[i-1];
-                    mfs.setCurrentDirectory(dir);
-                    gvc.load();
-                    YandexMetriсaHelper.chooseDirectoryEvent(dir);
-                }
-            });
-
-            builderSingle.show();
+            Intent intent = new Intent(this, SetActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -271,6 +246,20 @@ public class MainActivity extends AppCompatActivity {
         if (id==R.id.action_feedback){
 
             fb.openFeedbackForm();
+            return true;
+        }
+
+        if (id==R.id.action_store){
+            openStore();
+            return true;
+        }
+
+        if(id==R.id.tts_settings){
+            Intent intent = new Intent();
+            intent.setAction("com.android.settings.TTS_SETTINGS");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            YandexMetriсaHelper.openTTSSettings();
             return true;
         }
 

@@ -9,11 +9,12 @@ import android.graphics.Bitmap;
 public class ImageItem {
     private Bitmap image;
     private String title;
-
-    public ImageItem(Bitmap image, String title) {
+    private int id;
+    public ImageItem(Bitmap image, String title, int id) {
         super();
         this.image = image;
         this.title = title;
+        this.id = id;
     }
 
     public Bitmap getImage() {
@@ -30,5 +31,13 @@ public class ImageItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

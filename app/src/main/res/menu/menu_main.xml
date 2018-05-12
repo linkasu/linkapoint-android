@@ -4,6 +4,13 @@
     tools:context="ru.aacidov.distalkpro.MainActivity"
     >
     <item
+        android:id="@+id/action_store"
+        android:title="@string/store"
+
+        android:icon="@drawable/ic_shopping_cart_24px"
+        app:showAsAction="never"
+        />
+    <item
         android:id="@+id/action_choose_directory"
         android:title="@string/action_choose_directory"
         android:icon="@android:drawable/ic_menu_directions"
@@ -24,6 +31,11 @@
         app:showAsAction="never"
         android:checkable="true"
         android:checked="true"/>
+
+    <item
+        android:id="@+id/tts_settings"
+        android:title="@string/tts_settings"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/action_feedback"
         android:title="@string/action_feedback"
